@@ -19,7 +19,7 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 # ======================== CONFIGURAÇÕES ========================
 INPUT_FOLDER = r"C:\Users\daniel\Desktop\LLM\comments"   
-OUTPUT_FOLDER = r"C:\Users\daniel\Desktop\LLM_FINAL\modelo_literatura\RESULTADOS"   # Pasta de saída para arquivos e gráficos
+OUTPUT_FOLDER = r"C:\Users\daniel\Desktop\LLM_MANUAL\modelo_literatura\RESULTADOS"   # Pasta de saída para arquivos e gráficos
 CSV_GLOB = "*.csv"                    # Padrão de arquivos (ex.: '*.csv')
 COMMENT_COLUMN = "comment"            # Nome da coluna com os comentários
 ENCODING = "utf-8-sig"                # 'utf-8', 'utf-8-sig', etc.
