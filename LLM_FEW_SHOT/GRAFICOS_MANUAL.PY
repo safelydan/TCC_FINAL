@@ -7,9 +7,8 @@ import matplotlib.pyplot as plt
 # =========================
 # CONFIGURAÇÕES
 # =========================
-# Ajuste para a sua pasta com CSVs:
-INPUT_FOLDER  = r"C:\Users\daniel\Desktop\LLM_FINAL\LLM_FEW_SHOT\ANALISE_MANUAL_LLM_EW_SHOTS"
-OUTPUT_FOLDER = r"C:\Users\daniel\Desktop\LLM_FINAL\LLM_FEW_SHOT\GRAFICOS_MANUAL"
+INPUT_FOLDER  = r"C:\Users\daniel\Desktop\LLM_MANUAL\LLM_FEW_SHOT\ANALISE_MANUAL_LLM_EW_SHOTS"
+OUTPUT_FOLDER = r"C:\Users\daniel\Desktop\LLM_MANUAL\LLM_FEW_SHOT\GRAFICOS_MANUAL"
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 summary_csv = os.path.join(OUTPUT_FOLDER, "resumo_agregado.csv")
@@ -17,20 +16,37 @@ summary_csv = os.path.join(OUTPUT_FOLDER, "resumo_agregado.csv")
 # =========================
 # FUNÇÕES
 # =========================
+def should_skip_file(path: str) -> bool:
+    """
+    Pule arquivos de RESUMO/AGREGADOS pelo nome.
+    """
+    name = os.path.basename(path).lower()
+    # pula qualquer coisa com 'resumo' no nome ou o próprio arquivo agregado que vamos gerar
+    return (
+        "resumo" in name
+        or "aggregate" in name
+        or "aggregado" in name
+        or name == os.path.basename(summary_csv).lower()
+    )
+
 def normalize_label(value):
-    """Normaliza valores para {Positive, Neutral, Negative}.
-       Aceita strings (case-insensitive) e numéricos (1,0,-1).
-       'Mixed' vira 'Neutral'.
+    """
+    Normaliza valores para {Positive, Neutral, Negative}.
+    Aceita strings (case-insensitive) e NÚMEROS SOMENTE em {-1, 0, 1}.
+    'Mixed' vira 'Neutral'.
+    Outros números (ex.: 3, 100, 0.25) são ignorados (retorna None).
     """
     if pd.isna(value):
         return None
 
-    # tenta numérico
+    # tenta como número, aceitando apenas -1, 0, 1
     try:
         v = float(str(value).strip().replace(",", "."))
-        if v > 0:  return "Positive"
-        if v < 0:  return "Negative"
-        return "Neutral"
+        if v in (-1.0, 0.0, 1.0):
+            if v > 0:  return "Positive"
+            if v < 0:  return "Negative"
+            return "Neutral"
+        return None
     except Exception:
         pass
 
@@ -38,13 +54,15 @@ def normalize_label(value):
     mapping = {
         "positive": "Positive", "pos": "Positive", "1": "Positive",
         "negative": "Negative", "neg": "Negative", "-1": "Negative",
-        "neutral": "Neutral", "neu": "Neutral", "0": "Neutral",
+        "neutral": "Neutral",  "neu": "Neutral",  "0": "Neutral",
         "mixed": "Neutral",
     }
     return mapping.get(s, None)
 
 def count_sentiments(series: pd.Series) -> dict:
-    """Conta Positive/Neutral/Negative na série."""
+    """
+    Conta Positive/Neutral/Negative na série, após normalização.
+    """
     normalized = series.map(normalize_label).dropna()
     counts = normalized.value_counts().to_dict()
     for k in ["Positive", "Neutral", "Negative"]:
@@ -52,28 +70,27 @@ def count_sentiments(series: pd.Series) -> dict:
     return counts
 
 def detect_manual_column(df: pd.DataFrame) -> str | None:
-    """Retorna somente coluna de classificação MANUAL.
-       Critérios:
-       - Preferência por nomes exatos comuns: 'sentimento_manual', 'classificacao_manual'
-       - Se não encontrar, pega a primeira coluna que contenha 'manual' no nome
-       - Nunca retorna colunas sem 'manual'
+    """
+    Retorna SOMENTE coluna de classificação MANUAL (forma estrita).
+    Aceita apenas nomes exatos comuns: 'sentimento_manual' ou 'classificacao_manual'.
+    Não aceita qualquer coluna que contenha 'manual' para evitar pegar percentuais de resumo.
     """
     lower_cols = {c.lower(): c for c in df.columns}
     for exact in ["sentimento_manual", "classificacao_manual"]:
         if exact in lower_cols:
             return lower_cols[exact]
-    for c in df.columns:
-        cl = str(c).lower()
-        if "manual" in cl:
-            return c
     return None
 
 # =========================
 # PIPELINE
 # =========================
-csv_files = sorted(glob.glob(os.path.join(INPUT_FOLDER, "**", "*.csv"), recursive=True))
+# lista todos os CSVs
+all_csvs = sorted(glob.glob(os.path.join(INPUT_FOLDER, "**", "*.csv"), recursive=True))
+# pula os 'resumo'
+csv_files = [p for p in all_csvs if not should_skip_file(p)]
+
 if not csv_files:
-    raise SystemExit(f"Nenhum CSV encontrado em: {INPUT_FOLDER}")
+    raise SystemExit(f"Nenhum CSV (não-resumo) encontrado em: {INPUT_FOLDER}")
 
 per_file_rows = []
 for csv_path in csv_files:
@@ -85,7 +102,7 @@ for csv_path in csv_files:
 
     col = detect_manual_column(df)
     if col is None:
-        print(f"Aviso: coluna manual não encontrada em {csv_path}. Pulando.")
+        print(f"Aviso: coluna manual ('sentimento_manual' ou 'classificacao_manual') não encontrada em {csv_path}. Pulando.")
         continue
 
     counts = count_sentiments(df[col])
@@ -104,7 +121,7 @@ for csv_path in csv_files:
     })
 
 if not per_file_rows:
-    raise SystemExit("Nenhum arquivo válido processado (sem coluna manual).")
+    raise SystemExit("Nenhum arquivo válido processado (sem coluna manual válida).")
 
 # Agregado e CSV
 agg_df = pd.DataFrame(per_file_rows).sort_values("arquivo").reset_index(drop=True)
@@ -118,9 +135,9 @@ sum_neg = int(agg_df["Negative"].sum())
 labels = ["Positive", "Neutral", "Negative"]
 counts = [sum_pos, sum_neu, sum_neg]
 
-# Bar chart
+# Bar chart (não definir cores)
 plt.figure(figsize=(8, 5))
-plt.bar(labels, counts)  # Não especificar cores
+plt.bar(labels, counts)
 plt.xlabel("Sentiment")
 plt.ylabel("Comment Count")
 plt.title("Sentiment Analysis (ALL FILES) - Bar (MANUAL)")
@@ -129,7 +146,7 @@ plt.tight_layout()
 plt.savefig(bar_path, dpi=300)
 plt.close()
 
-# Pie chart
+# Pie chart (não definir cores)
 plt.figure(figsize=(6, 6))
 plt.pie(counts, labels=labels, autopct="%1.1f%%")
 plt.title("Sentiment Analysis (ALL FILES) - Pie (MANUAL)")
