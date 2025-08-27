@@ -135,9 +135,9 @@ sum_neg = int(agg_df["Negative"].sum())
 labels = ["Positive", "Neutral", "Negative"]
 counts = [sum_pos, sum_neu, sum_neg]
 
-# Bar chart (não definir cores)
+# Bar chart (cores melhores)
 plt.figure(figsize=(8, 5))
-plt.bar(labels, counts)
+plt.bar(labels, counts, color=['#2ecc71', '#95a5a6', '#e74c3c'])  # verde, cinza, vermelho
 plt.xlabel("Sentiment")
 plt.ylabel("Comment Count")
 plt.title("Sentiment Analysis (ALL FILES) - Bar (MANUAL)")
@@ -146,9 +146,10 @@ plt.tight_layout()
 plt.savefig(bar_path, dpi=300)
 plt.close()
 
-# Pie chart (não definir cores)
+# Pie chart (cores melhores)
 plt.figure(figsize=(6, 6))
-plt.pie(counts, labels=labels, autopct="%1.1f%%")
+plt.pie(counts, labels=labels, autopct="%1.1f%%",
+        colors=['#2ecc71', '#95a5a6', '#e74c3c'])
 plt.title("Sentiment Analysis (ALL FILES) - Pie (MANUAL)")
 pie_path = os.path.join(OUTPUT_FOLDER, "sentiment_pie_all.png")
 plt.tight_layout()

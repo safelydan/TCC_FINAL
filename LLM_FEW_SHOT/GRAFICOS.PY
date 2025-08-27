@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 # CONFIGURAÇÕES
 # =========================
 # Ajuste para a sua pasta com CSVs:
-INPUT_FOLDER  = r"C:\Users\daniel\Desktop\LLM_FINAL\LLM_FEW_SHOT\ANALISE_FEW_SHOTS"
-OUTPUT_FOLDER = r"C:\Users\daniel\Desktop\LLM_FINAL\LLM_FEW_SHOT\GRAFICOS"
+INPUT_FOLDER  = r"C:\Users\daniel\Desktop\LLM_MANUAL\LLM_FEW_SHOT\ANALISE_MANUAL_LLM_EW_SHOTS"
+OUTPUT_FOLDER = r"C:\Users\daniel\Desktop\LLM_MANUAL\LLM_FEW_SHOT\GRAFICOS"
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 summary_csv = os.path.join(OUTPUT_FOLDER, "resumo_agregado.csv")
@@ -117,21 +117,22 @@ sum_neg = int(agg_df["Negative"].sum())
 labels = ["Positive", "Neutral", "Negative"]
 counts = [sum_pos, sum_neu, sum_neg]
 
-# Bar chart
+# Bar chart (cores melhores)
 plt.figure(figsize=(8, 5))
-plt.bar(labels, counts)  # Não especificar cores
+plt.bar(labels, counts, color=['#2ecc71', '#95a5a6', '#e74c3c'])  # verde, cinza, vermelho
 plt.xlabel("Sentiment")
 plt.ylabel("Comment Count")
-plt.title("Sentiment Analysis (ALL FILES) - Bar")
+plt.title("Sentiment Analysis (ALL FILES) - Bar (MANUAL)")
 bar_path = os.path.join(OUTPUT_FOLDER, "sentiment_bar_all.png")
 plt.tight_layout()
 plt.savefig(bar_path, dpi=300)
 plt.close()
 
-# Pie chart
+# Pie chart (cores melhores)
 plt.figure(figsize=(6, 6))
-plt.pie(counts, labels=labels, autopct="%1.1f%%")
-plt.title("Sentiment Analysis (ALL FILES) - Pie")
+plt.pie(counts, labels=labels, autopct="%1.1f%%",
+        colors=['#2ecc71', '#95a5a6', '#e74c3c'])
+plt.title("Sentiment Analysis (ALL FILES) - Pie (MANUAL)")
 pie_path = os.path.join(OUTPUT_FOLDER, "sentiment_pie_all.png")
 plt.tight_layout()
 plt.savefig(pie_path, dpi=300)
