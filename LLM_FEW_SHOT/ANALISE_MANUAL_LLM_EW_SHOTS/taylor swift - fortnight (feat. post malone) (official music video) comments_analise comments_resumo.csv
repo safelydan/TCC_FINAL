@@ -1,0 +1,4 @@
+﻿sentimento,quantidade,percentual,sentimento_manual,percentual_novo
+Positive,150,50.0,148,49.33
+Negative,90,30.0,75,25.0
+Neutral,60,20.0,77,25.67

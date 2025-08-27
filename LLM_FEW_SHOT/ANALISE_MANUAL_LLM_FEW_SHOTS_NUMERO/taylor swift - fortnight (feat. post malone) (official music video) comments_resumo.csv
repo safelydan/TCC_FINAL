@@ -1,0 +1,4 @@
+sentimento,quantidade,percentual,sentimento_manual,percentual_novo
+1,150,50.0,148,49.33
+-1,90,30.0,75,25.0
+0,60,20.0,77,25.67

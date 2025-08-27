@@ -1,0 +1,16 @@
+file,accuracy,f1_macro,f1_micro,n
+ariana grande - we can't be friends (wait for your love) (official music video),0.5766666666666667,0.4158337755017093,0.5766666666666667,300
+artemas - i like the way you kiss me (lyric video),0.6488294314381271,0.590956864404009,0.6488294314381271,299
+benson boone - beautiful things (official music video),0.86,0.6953946218574123,0.86,300
+beyonc - texas hold 'em (official visualizer),0.7366666666666667,0.5255008101340404,0.7366666666666667,300
+billie eilish - birds of a feather (official lyric video),0.7566666666666667,0.6127441924705871,0.7566666666666667,300
+chappell roan - good luck babe (official lyric video),0.77,0.694857739399531,0.77,300
+charli xcx - guess featuring billie eilish (official video),0.78,0.7032455577605599,0.78,300
+dua lipa - training season (official music video),0.87,0.7909851409851409,0.87,300
+kendrick lamar - not like us,0.8066666666666666,0.7149241695288426,0.8066666666666666,300
+olivia rodrigo - obsessed (official music video),0.9166666666666666,0.8788187656650777,0.9166666666666666,300
+rose  bruno mars - apt. (official music video) comments copy_analise.csv,0.9333333333333333,0.847356686029455,0.9333333333333333,300
+sabrina carpenter - espresso,0.8933333333333333,0.8134281234107476,0.8933333333333333,300
+sza - snooze (audio),0.8,0.6418098201716783,0.8,300
+taylor swift - fortnight (feat. post malone) (official music video),0.8266666666666667,0.7056805230985299,0.8266666666666667,300
+tyla - water (official audio),0.8058252427184466,0.6109775641025641,0.8058252427184466,206

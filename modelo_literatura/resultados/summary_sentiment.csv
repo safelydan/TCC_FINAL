@@ -1,0 +1,20 @@
+﻿file,total,positive,neutral,negative,pct_positive,pct_neutral,pct_negative,avg_compound,overall_sentiment
+ariana grande - we can't be friends (wait for your love) (official music video) comments.csv,300,182,55,63,60.66666666666667,18.333333333333332,21.0,0.31293133333333334,Positive
+artemas - i like the way you kiss me (lyric video) comments.csv,299,149,101,49,49.83277591973244,33.77926421404682,16.387959866220736,0.222828762541806,Positive
+benson boone - beautiful things (official music video) comments.csv,300,201,42,57,67.0,14.000000000000002,19.0,0.371145,Positive
+beyonc - texas hold 'em (official visualizer) comments.csv,300,90,40,170,30.0,13.333333333333334,56.666666666666664,-0.142294,Negative
+billie eilish - birds of a feather (official lyric video) comments.csv,300,189,68,43,63.0,22.666666666666664,14.333333333333334,0.3818796666666667,Positive
+chappell roan - good luck babe (official lyric video) comments.csv,300,195,57,48,65.0,19.0,16.0,0.3347043333333334,Positive
+chappell roan - hot to go (official music video) comments.csv,300,166,67,67,55.333333333333336,22.333333333333332,22.333333333333332,0.24281200000000003,Positive
+charli xcx - 360 (official video) comments.csv,300,125,98,77,41.66666666666667,32.666666666666664,25.666666666666664,0.13705333333333333,Positive
+charli xcx - guess featuring billie eilish (official video) comments.csv,300,135,82,83,45.0,27.333333333333332,27.666666666666668,0.14062366666666667,Positive
+dua lipa - training season (official music video) comments.csv,300,185,60,55,61.66666666666667,20.0,18.333333333333332,0.33764933333333325,Positive
+kendrick lamar - not like us comments.csv,300,122,81,97,40.666666666666664,27.0,32.33333333333333,0.05867,Positive
+lady gaga bruno mars - die with a smile (official music video) comments.csv,300,192,50,58,64.0,16.666666666666664,19.333333333333332,0.3453086666666667,Positive
+olivia rodrigo - obsessed (official music video) comments.csv,300,173,72,55,57.666666666666664,24.0,18.333333333333332,0.26388033333333333,Positive
+rose  bruno mars - apt. (official music video) comments copy.csv,300,165,56,79,55.00000000000001,18.666666666666668,26.333333333333332,0.22149533333333332,Positive
+sabrina carpenter - espresso comments.csv,300,173,74,53,57.666666666666664,24.666666666666668,17.666666666666668,0.29478566666666667,Positive
+sza - snooze (audio) comments.csv,300,185,66,49,61.66666666666667,22.0,16.333333333333332,0.319321,Positive
+taylor swift - fortnight (feat. post malone) (official music video) comments.csv,300,178,57,65,59.333333333333336,19.0,21.666666666666668,0.29753066666666667,Positive
+tyla - water (official audio) comments.csv,206,128,49,29,62.13592233009708,23.78640776699029,14.077669902912621,0.3625145631067961,Positive
+ALL_FILES,5305,2933,1175,1197,55.28746465598492,22.148916116870875,22.563619227144205,0.24817204524033934,Positive
