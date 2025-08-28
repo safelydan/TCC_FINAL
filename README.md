@@ -1,76 +1,90 @@
+# Projeto de Análise de Sentimentos em Comentários do YouTube  
 
-# Análise de Sentimentos para Comentários do YouTube
+Este projeto tem como finalidade a **análise de sentimentos em comentários de vídeos do YouTube**, integrando abordagens manuais e automáticas (LLM). O estudo resulta em **relatórios consolidados, representações gráficas e métricas de avaliação de desempenho (com ênfase no F1-score)**, a fim de oferecer uma visão clara e comparativa da acurácia entre os diferentes métodos.  
 
-Este script realiza análise de sentimentos em comentários extraídos de vídeos musicais do YouTube. Ele utiliza um modelo de linguagem (LLM) local através do **Ollama** para classificar os comentários como **Positivos**, **Negativos** ou **Neutros**, e também fornece uma justificativa para cada classificação.
+## Estrutura do Projeto  
 
-## Pré-requisitos
+```
+projeto_sentimentos/
+│── data/                         # Conjunto de dados brutos e processados
+│   ├── comments/                 # Arquivos CSV originais
+│   ├── analisados_manualmente/   # Anotações manuais
+│   ├── analise_few_shots/        # Resultados obtidos via Few-Shot LLM
+│   ├── analise_manual_few_shots/ # Revisões e ajustes manuais
+│
+│── src/                          # Código-fonte
+│   ├── sentiment_analysis.py     # Script principal de análise
+│   ├── analisar_csvs_ollama_few_shots.py # Análise utilizando Few-Shot LLM
+│   ├── graficos.py               # Geração de representações gráficas automáticas
+│   ├── graficos_manual.py        # Geração de gráficos a partir da análise manual
+│
+│── results/                      # Resultados gerados
+│   ├── f1_score/                 # Métricas de avaliação
+│   ├── graficos/                 # Gráficos oriundos da análise automática
+│   ├── graficos_manual/          # Gráficos oriundos da análise manual
+│   ├── resumo_agregado.csv       # Resumo consolidado das análises
+│
+│── docs/                         # Documentação
+│   ├── README.md                 # Este documento
+│
+│── requirements.txt              # Dependências do projeto
+```
 
-Antes de rodar o código, você precisa ter as seguintes ferramentas e bibliotecas instaladas:
+## Funcionalidades  
 
-### Ferramentas
-- [Ollama](https://ollama.com/download): Instale o Ollama em seu computador para rodar os modelos de linguagem localmente.
-- [Python 3.6+](https://www.python.org/downloads/): Certifique-se de ter o Python instalado em seu sistema.
+- **Pré-processamento e organização de comentários** provenientes de arquivos CSV.  
+- **Classificação de sentimentos** em três categorias:  
+  - `Positive → 1`  
+  - `Neutral → 0`  
+  - `Negative → -1`  
+- **Análise automática** empregando **LLM Few-Shot**.  
+- **Análise manual** de subconjuntos de comentários para aferição da qualidade.  
+- **Comparação de desempenho** entre métodos de análise.  
+- **Cálculo de métricas de avaliação** (precisão, revocação e F1-score).  
+- **Visualização dos resultados** por meio de gráficos (barras e setores).  
 
-### Bibliotecas Python
-As bibliotecas necessárias são listadas no arquivo `requirements.txt`.
+## Instruções de Execução  
 
-Você pode instalar as dependências com o comando:
+### 1. Clonar o repositório  
+```bash
+git clone https://github.com/seuusuario/projeto_sentimentos.git
+cd projeto_sentimentos
+```
 
+### 2. Instalar dependências  
 ```bash
 pip install -r requirements.txt
 ```
 
-## Estrutura do Projeto
-
-- `analisar_csvs_ollama.py`: Script principal que realiza a análise de sentimentos dos comentários.
-- `requirements.txt`: Lista de dependências necessárias.
-- `analise_resultados.csv`: Arquivo gerado com os resultados da análise (será salvo na mesma pasta onde o script é executado).
-
-## Como Usar
-
-### 1. Configuração do Ollama
-
-Certifique-se de que o Ollama está instalado e rodando corretamente na sua máquina. Para isso, abra o terminal e execute o seguinte comando para baixar o modelo que será usado para análise (por exemplo, `llama3:8b`):
-
+### 3. Executar os scripts principais  
+Análise automática:  
 ```bash
-ollama pull llama3:8b
+python src/sentiment_analysis.py
 ```
 
-Verifique se o servidor do Ollama está ativo, rodando na porta `11434`:
-
+Análise via Few-Shot LLM:  
 ```bash
-curl http://127.0.0.1:11434/api/tags
+python src/analisar_csvs_ollama_few_shots.py
 ```
 
-### 2. Executando o Código
-
-- Substitua o caminho do arquivo CSV na variável `caminho_csv` no script.
-- Execute o script utilizando o comando:
-
+Geração de gráficos:  
 ```bash
-python analisar_csvs_ollama.py
+python src/graficos.py
 ```
 
-O script irá analisar os comentários presentes no arquivo CSV e salvar os resultados em um novo arquivo `analise_resultados.csv`.
+### 4. Resultados Obtidos  
+- Métricas disponíveis em `results/f1_score/`.  
+- Gráficos em `results/graficos/` e `results/graficos_manual/`.  
+- Resumo consolidado em `results/resumo_agregado.csv`.  
 
-### 3. Resultados
+## Exemplos de Saídas  
 
-O arquivo `analise_resultados.csv` será gerado com as seguintes colunas:
-- `comentario`: O comentário original do YouTube.
-- `resposta_api`: A resposta da API, contendo a classificação do comentário (Positivo, Negativo ou Neutro) e uma justificativa para essa classificação.
+- Distribuição de sentimentos por vídeo.  
+- Comparativo entre análise manual e automática.  
+- Percentuais de cada categoria de sentimento (`Positive`, `Neutral`, `Negative`).  
 
-### Exemplo de Saída
+- O projeto foi desenvolvido em **Python 3.10 ou superior**. 
 
-O arquivo `analise_resultados.csv` terá o seguinte formato:
+## Autor  
 
-| comentario                          | resposta_api                                                      |
-|-------------------------------------|-------------------------------------------------------------------|
-| "Amo essa música, muito boa!"       | {"sentiment": "Positive", "justification": "Muito elogiada pela emoção."} |
-| "Não gostei dessa música, horrível!"| {"sentiment": "Negative", "justification": "Apreciada de forma negativa."} |
-
-## Observações
-
-- O script realiza a análise de sentimentos para cada comentário presente no arquivo CSV. Ele pode ser adaptado para analisar outros tipos de dados.
-- Se o modelo não retornar um JSON válido, o script tentará aplicar heurísticas simples para categorizar o comentário.
-- Em arquivos com muitos comentários, a análise pode demorar, dependendo da capacidade da sua máquina e do tamanho do modelo.
-
+Este projeto foi desenvolvido no âmbito de pesquisa acadêmica em **Análise de Sentimentos**, no Instituto Federal do Piauí – Campus Picos.  
