@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
-INPUT_FOLDER  = r"C:\Users\daniel\Desktop\LLM_FINAL\data\analise - zeroshot"
+INPUT_FOLDER  = r"C:\Users\daniel\Desktop\LLM_FINAL\data\manual_zero_shot" 
 OUTPUT_FOLDER = os.path.join(INPUT_FOLDER, "graficos")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 

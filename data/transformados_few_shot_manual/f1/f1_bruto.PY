@@ -3,7 +3,7 @@ from sklearn.metrics import classification_report
 import glob
 import os
 
-INPUT_FOLDER  = r"C:\Users\daniel\Desktop\LLM_FINAL\data\analise - zeroshot" 
+INPUT_FOLDER  = r"C:\Users\daniel\Desktop\LLM_FINAL\data\transformados_few_shot_manual" 
 
 
 for file in glob.glob(os.path.join(INPUT_FOLDER, "*.csv")):
