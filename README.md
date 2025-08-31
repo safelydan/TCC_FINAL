@@ -23,12 +23,19 @@ LLM_FINAL/
 │   ├── avaliar_resultados.py                 # Avaliação das métricas (precisão, revocação, F1)
 │   ├── gerar_graficos.py                     # Geração de gráficos comparativos
 │   └── utils.py                              # Funções auxiliares
-│
+|── .env                          # Variáveis de ambiente (API_KEY, PLAYLIST_ID)
 │── requirements.txt              # Dependências do projeto
 │── README.md                     # Documentação
 ```
 
----
+## Configuração das Credenciais  
+
+Crie um arquivo **`.env`** na raiz do projeto com o seguinte conteúdo:  
+
+API_KEY=SUA_CHAVE_DO_YOUTUBE
+PLAYLIST_ID=ID_DA_PLAYLIST
+
+Isso evita expor credenciais diretamente no código.  
 
 ## Como Executar  
 
