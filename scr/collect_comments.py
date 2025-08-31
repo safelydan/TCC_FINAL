@@ -8,6 +8,10 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import requests
 from difflib import SequenceMatcher
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 def clean_song_title(title: str) -> str:
     return re.sub(r'\(.*?\)|\[.*?\]|Remastered|Live|HD|Official', '', title, flags=re.IGNORECASE).strip()
@@ -174,8 +178,8 @@ def get_comments(
             break
 
 def main():
-    api_key = 'AIzaSyD_0nNX7jPiWLiTxEZ17_22oHkyMbB_ny8'
-    playlist_id = 'PL5vXKG03DXKFeOZrrCsZJccJUeBbkBXM2'
+    api_key = os.getenv("API_KEY")
+    playlist_id = os.getenv("PLAYLIST_ID")
     keywords = [
         "melody", "harmony", "rhythm", "tempo", "beat", "chords", "notes",
         "tone", "timbre", "composition", "progression", "pitch", "acoustic",
