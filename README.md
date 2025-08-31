@@ -1,90 +1,90 @@
 # Projeto de Análise de Sentimentos em Comentários do YouTube  
 
-Este projeto tem como finalidade a **análise de sentimentos em comentários de vídeos do YouTube**, integrando abordagens manuais e automáticas (LLM). O estudo resulta em **relatórios consolidados, representações gráficas e métricas de avaliação de desempenho (com ênfase no F1-score)**, a fim de oferecer uma visão clara e comparativa da acurácia entre os diferentes métodos.  
+Este projeto tem como finalidade a **análise de sentimentos em comentários de vídeos do YouTube**, integrando abordagens **manuais e automáticas** com **Modelos de Linguagem de Grande Porte (LLMs)**.  
+O estudo gera **relatórios consolidados, representações gráficas e métricas de avaliação de desempenho (com ênfase no F1-score)**, permitindo comparar a acurácia entre diferentes métodos de análise.  
 
-## Estrutura do Projeto  
+---
+
+## 📂 Estrutura do Projeto  
 
 ```
-projeto_sentimentos/
-│── data/                         # Conjunto de dados brutos e processados
-│   ├── comments/                 # Arquivos CSV originais
-│   ├── analisados_manualmente/   # Anotações manuais
-│   ├── analise_few_shots/        # Resultados obtidos via Few-Shot LLM
-│   ├── analise_manual_few_shots/ # Revisões e ajustes manuais
+LLM_FINAL/
+│── data/                         
+│   ├── comments/                  # Arquivos CSV originais extraídos do YouTube
+│   ├── analisados_manualmente/    # Conjunto de dados anotados manualmente
+│   ├── analisados_few_shot/       # Resultados da classificação Few-Shot com LLMs
+│   ├── analisados_manualmente_few_shot/ # Ajustes e revisões combinadas
+│   ├── VADER/                     # Resultados da análise via VADER (baseline léxico)
+│   └── f1/                        # Relatórios e métricas F1 consolidadas
 │
-│── src/                          # Código-fonte
-│   ├── sentiment_analysis.py     # Script principal de análise
-│   ├── analisar_csvs_ollama_few_shots.py # Análise utilizando Few-Shot LLM
-│   ├── graficos.py               # Geração de representações gráficas automáticas
-│   ├── graficos_manual.py        # Geração de gráficos a partir da análise manual
-│
-│── results/                      # Resultados gerados
-│   ├── f1_score/                 # Métricas de avaliação
-│   ├── graficos/                 # Gráficos oriundos da análise automática
-│   ├── graficos_manual/          # Gráficos oriundos da análise manual
-│   ├── resumo_agregado.csv       # Resumo consolidado das análises
-│
-│── docs/                         # Documentação
-│   ├── README.md                 # Este documento
+│── src/                          
+│   ├── sentiment_analysis.py                 # Script principal de análise
+│   ├── analisar_csvs_ollama_few_shots.py     # Classificação usando Few-Shot via Ollama
+│   ├── avaliar_resultados.py                 # Avaliação das métricas (precisão, revocação, F1)
+│   ├── gerar_graficos.py                     # Geração de gráficos comparativos
+│   └── utils.py                              # Funções auxiliares
 │
 │── requirements.txt              # Dependências do projeto
+│── README.md                     # Documentação
 ```
 
-## Funcionalidades  
+---
 
-- **Pré-processamento e organização de comentários** provenientes de arquivos CSV.  
-- **Classificação de sentimentos** em três categorias:  
-  - `Positive → 1`  
-  - `Neutral → 0`  
-  - `Negative → -1`  
-- **Análise automática** empregando **LLM Few-Shot**.  
-- **Análise manual** de subconjuntos de comentários para aferição da qualidade.  
-- **Comparação de desempenho** entre métodos de análise.  
-- **Cálculo de métricas de avaliação** (precisão, revocação e F1-score).  
-- **Visualização dos resultados** por meio de gráficos (barras e setores).  
+## Como Executar  
 
-## Instruções de Execução  
+1. **Clonar o repositório**  
+   ```bash
+   git clone https://github.com/seuusuario/LLM_FINAL.git
+   cd LLM_FINAL
+   ```
 
-### 1. Clonar o repositório  
-```bash
-git clone https://github.com/seuusuario/projeto_sentimentos.git
-cd projeto_sentimentos
-```
+2. **Criar ambiente virtual e instalar dependências**  
+   ```bash
+   python -m venv venv
+   source venv/bin/activate   # Linux/Mac
+   venv\Scripts\activate      # Windows
 
-### 2. Instalar dependências  
-```bash
-pip install -r requirements.txt
-```
+   pip install -r requirements.txt
+   ```
 
-### 3. Executar os scripts principais  
-Análise automática:  
-```bash
-python src/sentiment_analysis.py
-```
+3. **Executar análise automática (LLM Few-Shot via Ollama)**  
+   ```bash
+   python src/analisar_csvs_ollama_few_shots.py
+   ```
 
-Análise via Few-Shot LLM:  
-```bash
-python src/analisar_csvs_ollama_few_shots.py
-```
+4. **Executar avaliação e gerar métricas**  
+   ```bash
+   python src/avaliar_resultados.py
+   ```
 
-Geração de gráficos:  
-```bash
-python src/graficos.py
-```
+5. **Gerar gráficos comparativos**  
+   ```bash
+   python src/gerar_graficos.py
+   ```
 
-### 4. Resultados Obtidos  
-- Métricas disponíveis em `results/f1_score/`.  
-- Gráficos em `results/graficos/` e `results/graficos_manual/`.  
-- Resumo consolidado em `results/resumo_agregado.csv`.  
+---
 
-## Exemplos de Saídas  
+## Resultados  
 
-- Distribuição de sentimentos por vídeo.  
-- Comparativo entre análise manual e automática.  
-- Percentuais de cada categoria de sentimento (`Positive`, `Neutral`, `Negative`).  
+O projeto gera:  
+- **Tabelas comparativas** entre anotações manuais, VADER e LLMs.  
+- **Métricas de desempenho**: precisão, revocação e F1-score por classe (positivo, neutro, negativo).  
+- **Gráficos** em formato `.png` mostrando comparações entre abordagens.  
 
-- O projeto foi desenvolvido em **Python 3.10 ou superior**. 
+---
 
-## Autor  
+## Tecnologias Utilizadas  
 
-Este projeto foi desenvolvido no âmbito de pesquisa acadêmica em **Análise de Sentimentos**, no Instituto Federal do Piauí – Campus Picos.  
+- **Python 3.10+**  
+- **Bibliotecas principais**:  
+  - `pandas`, `numpy` – manipulação de dados  
+  - `scikit-learn` – métricas de avaliação  
+  - `matplotlib`, `seaborn` – geração de gráficos  
+  - `yt-dlp` – coleta de comentários (se aplicável)  
+- **LLM**: Execução via **Ollama** para classificação automática  
+
+---
+
+## Objetivo Acadêmico  
+
+Este repositório faz parte de um **Trabalho de Conclusão de Curso (TCC)** em **Análise e Desenvolvimento de Sistemas (ADS)**, cujo objetivo é avaliar metodologias distintas de **análise de sentimentos em mídias sociais**, destacando vantagens, limitações e potencial de uso em contextos acadêmicos e mercadológicos.  
